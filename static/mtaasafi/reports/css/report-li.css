@@ -1,0 +1,85 @@
+:host {
+	display: block;
+	background-color: white;
+	width: 100%;
+	font-size: 1em;
+	font-weight: 100;
+	cursor: pointer;
+}
+.report {
+	background-color: white;
+	@apply(--layout-horizontal);
+}
+.text-content {
+	min-height: 68px;
+	padding-bottom: 20px;
+	margin-bottom: 16px;
+	/*border-bottom: 1px solid #DEDEDE;*/
+	@apply(--layout-horizontal);
+	@apply(--layout-flex);
+}
+.subtext {
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+div {
+	display: inline-block;
+}
+.text {
+	margin-right: 16px;
+	@apply(--layout-vertical);
+	@apply(--layout-flex);
+}
+.report ::content iron-image {
+	margin-right: 16px;
+	width: 113px;
+	height: 85px;
+	min-width:113px;
+	z-index: 100;
+	background-color: lightgray;
+	border-radius: 4px;
+	border: 1px solid #DEDEDE;
+}
+.report ::content h2 {
+	margin: 0;
+	font-size: 1.3em;
+	font-weight: 100 !important;
+	width: 100%;
+	display: block;
+	color: #666666;
+	text-overflow: ellipsis;
+	overflow: hidden;
+    white-space: nowrap;
+}
+.report ::content .visual-div {
+	font-size: 1em;
+	margin: 0 8px;
+}
+.report ::content h3 {
+	margin: 0;
+	font-size: 1em;
+	font-weight: 100;
+	color: #757575;
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+    white-space: nowrap;
+}
+.votes {
+	margin: 0 13px 0 16px;
+	z-index: 999;
+	@apply(--layout-vertical);
+	@apply(--layout-center);
+}
+.votes ::content h1 {
+	margin: 0;
+	color: #757575;
+	font-size: 1.8em;
+	font-weight: 200;
+}
+.votes ::content p {
+	margin: 0;
+	font-size: 1em;
+	color: #757575;
+	font-weight: 100;
+}

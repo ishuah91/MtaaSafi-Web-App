@@ -1,0 +1,65 @@
+:host {
+	display: block;
+	background-color: white;
+	width: 100%;
+	height: 100%;
+}
+#report-container {
+	width: 100%;
+	height: 100%;
+	@apply(--layout-scroll);
+}
+neon-animated-pages {
+	height: 100%;
+	width: 100%;
+}
+paper-toolbar {
+	background: white;
+	color: #757575;
+	border-bottom: 1px solid #DEDEDE;
+	padding: 0;
+}
+paper-toolbar::shadow .toolbar-tools {
+	padding: 0;
+}
+paper-icon-button.back {
+	margin-left: 0 !important;
+}
+
+#list-header {
+	margin: 0;
+	font-size: 1.2em;
+	text-transform: capitalize;
+	@apply(--layout-flex);
+}
+paper-tabs {
+	position: relative;
+	top: 8px;
+	margin: 0 !important;
+	--paper-tabs-selection-bar-color: #FF7F50;
+}
+paper-tabs::shadow {
+	margin: 0;
+}
+paper-tab {
+	--paper-tab-ink: #FF7F50;
+}
+paper-tab.iron-selected {
+	border: 1px solid #DEDEDE;
+	background: white;
+}
+
+.list-content {
+	margin-top: 16px;
+	@apply(--layout-vertical);
+	@apply(--layout-center);
+	@apply(--layout-flex);
+}
+report-li {
+	background: white;
+}
+
+#details, report-detail {
+	height: 100%;
+	width: 100%;
+}

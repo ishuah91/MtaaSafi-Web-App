@@ -1,0 +1,18 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+
+<dom-module id="admin-li">
+	<link rel="import" type="css" href="css/admin-li.css" />
+	<template>
+		<div class="admin">
+			<div class="text">
+				<content select="h2"></content>
+			</div>
+			<div class='reports'>
+				<content select="h1"></content>
+				<content select="p"></content>
+			</div>
+		</div>
+		<content></content>
+	</template>
+	<script> Polymer({is: "admin-li"}); </script>
+</dom-module>

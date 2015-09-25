@@ -1,0 +1,152 @@
+<!-- Based on http://component.kitchen/components/addyosmani/page-er -->
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/paper-button/paper-button.html">
+
+<polymer-element name="page-inator" attributes="perpage currentpage next previous rangeSize data customTemplate">
+  <template>
+	<link rel="stylesheet" href="css/page-inator.css">
+	<div class="pagination">
+		<template if="{{!customTemplate && pageCount > 0 }}" id="template">
+			<ul>
+				<li class='{{currentpage === 0 ? "disabled" : ""}}'>
+					<paper-button on-click="{{prevPage}}">{{previous}}</paper-button>
+				</li>
+				<li class="{{0 == currentpage ? 'active' : ''}}" >
+					<paper-button on-click="{{ firstPage }}">1</paper-button>
+				</li>
+				<template if="{{ currentRange[0] > 1 }}"><li class="dots">...</li></template>
+				<template repeat="{{n in currentRange}}">
+					<template if="{{ n != 0 && n != pageCount }}">
+						<li class="{{n == currentpage ? 'active' : ''}}" data-item="{{n}}" on-click="{{setPage}}">
+							<paper-button>{{ n + 1 }}</paper-button>
+						</li>
+					</template>
+				</template>
+				<template if="{{ pageCount > currentRange[0] + rangeSize }}"><li class="dots">...</li></template>
+				<li class="{{pageCount == currentpage ? 'active' : ''}}">
+					<paper-button on-click="{{lastPage}}">{{ pageCount + 1 }}</paper-button>
+				</li>
+				<li class='{{currentpage === pageCount? "disabled" : ""}}'>
+					<paper-button on-click="{{nextPage}}">{{next}}</paper-button>
+				</li>
+			</ul>
+		</template>
+	</div>
+  </template>
+  <script>
+  Polymer('page-inator', {
+	perpage: 10,
+	currentpage: 0,
+	currentRange: [],
+	customTemplate: false,
+	pageCount: 0,
+	rangeSize: 4,
+	items: [], // cached instance of the model data for pagination
+	data: [], // complete set of data we wish to be paginated
+	previous: "prev",
+	next: "next",
+
+	dataChanged: function(){
+	  // this.data is the complete original set of data
+
+	  // Update current range to account for items per page, range.
+	  this.currentRange = this.range();
+
+	  // Cache the total page count
+	  this.pageCount =  this.getPageCount();
+
+	  // Update model bound to UI with filtered range
+	  // Source of truth for the component
+	  this.items = this.filterPage();
+
+	  // Fire event for once model data is paged
+	  this.fire('pager-data', { data: this.items });
+	},
+
+	firstPage: function () { this.currentpage = 0; },
+	lastPage: function () { this.currentpage = this.pageCount; },
+
+	prevPage: function () {
+	  if ( this.currentpage > 0 ) {
+		this.currentpage--;
+		this.fire('pager-previous', { page: this.currentpage });
+	  }
+	},
+
+	nextPage: function () {
+	  if ( this.currentpage < this.getPageCount() ) {
+		this.currentpage++;
+		this.fire('pager-next', { page: this.currentpage });
+	  }
+	},
+
+	changePage: function (page) {
+		var desiredPage = parseInt(page, 10);
+		if (desiredPage <= this.getPageCount())
+			this.currentpage = desiredPage;
+	},
+
+	prevPageDisabled: function () {
+	  return this.currentpage === 0 ? "disabled" : "";
+	},
+
+	nextPageDisabled: function() {
+	  return this.currentpage === this.getPageCount() ? "disabled" : "";
+	},
+
+	getPageCount: function () {
+	  return Math.ceil( this.data.length / this.perpage ) - 1;
+	},
+
+	setPage: function (e,d,t) {
+	  this.currentpage = parseInt( t.dataset.item, 10 );
+	},
+
+	currentpageChanged: function () {
+	  this.items = this.filterPage();
+	  this.currentRange = this.range();
+	  this.fire('pager-change', { page: this.currentpage, data: this.items });
+	},
+
+	perpageChanged: function () {
+	  this.currentpageChanged();
+	},
+
+	range: function () {
+		var paginations = [];
+		var start = this.currentpage - (this.rangeSize/2);
+		
+		if (start > this.getPageCount() - this.rangeSize)
+			start = this.getPageCount() - this.rangeSize;
+		if (start < 1)
+			start = 1;
+
+		for (var i = start; i < start + this.rangeSize; i++) {
+			if (i < this.getPageCount())
+				paginations.push(i);
+		}
+		return paginations;
+	},
+
+	filterPage: function () {
+	  return this.data.slice(this.currentpage * this.perpage, (this.currentpage * this.perpage) + this.perpage);
+	},
+
+	ready: function () {
+	  if (this.customTemplate) {
+		/* The custom layout for your pagination controls will likely
+		   use templates, which we will need to re-bind to data within
+		   the scope of this element. The .scope hack below gives us
+		   a reference to the element scope that we can bind to, populating
+		   your supplied template accordingly. We will update this if we
+		   find a better way to handle it.*/
+		this.scope = this;
+		var tmpl = document.createElement('template');
+		tmpl.id = "itemTemplate";
+		tmpl.innerHTML = this.innerHTML;
+		this.shadowRoot.appendChild(tmpl);
+	  }
+	}
+  });
+  </script>
+</polymer-element>

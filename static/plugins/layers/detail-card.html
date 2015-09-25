@@ -1,0 +1,76 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="/static/components/bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="detail-card">
+	<style>
+		:host { 
+			width: 300px;
+		}
+
+		h1 {
+			font-size: 1em;
+			margin: 0;
+			text-align: center;
+			display: block;
+		}
+
+		.header {
+			@apply(--layout-horizontal);
+		}
+		.header h1 {
+			line-height: 40px;
+			@apply(--layout-flex);
+			@apply(--layout-center-justified);
+		}
+		.header #close {
+			@apply(--layout-end-justified);
+		}
+
+		.card {
+			padding: 8px;
+			border-radius: 3px;
+			box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+			margin-bottom: 8px;
+			@apply(--layout-vertical);
+			background-color: white;
+			pointer-events: all;
+		}
+	</style>
+	<template>
+		<div id="detail-card" class="card">
+			<div class="header">
+				<paper-icon-button flat id="center" icon="maps:my-location" on-tap="center"></paper-icon-button>
+				<h1>{{ title }}</h1>
+				<paper-icon-button flat id="close" icon="close" on-tap="close"></paper-icon-button>
+			</div>
+			<p>{{ details }}</p>
+		</div>
+	</template>
+</dom-module>
+<script>
+	DetailCard = Polymer({ is: "detail-card",
+		properties: {
+			title: String,
+			details: String,
+			bounds: {
+				type: Object
+			}
+		},
+
+		factoryImpl: function(title, details, geometry) {
+			this.title = title;
+			this.details = details;
+			this.bounds = d3.geo.bounds(geometry);
+		},
+
+		center: function() {
+			SC.Lmap.fitBounds([[this.bounds[0][1], this.bounds[0][0]], [this.bounds[1][1], this.bounds[1][0]]]);
+		},
+
+		close: function() {
+			d3.selectAll("map-interface .site").classed("active", false);
+			this.remove();
+		}
+	});
+</script>

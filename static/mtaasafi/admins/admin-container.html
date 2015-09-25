@@ -1,0 +1,63 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="admin-service.html">
+<link rel="import" href="admin-list.html">
+<link rel="import" href="/static/plugins/map/map-interface.html">
+
+<dom-module id="admin-container">
+	<style>
+		:host {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+		admin-list {
+			width: 50%;
+			min-width: 450px;
+			max-height: 100%;
+			margin: 0 16px;
+		}
+		.main-container { 
+			height: 100%;
+			@apply(--layout-horizontal);
+		}
+	</style>
+	<template>
+		<admin-service on-data-downloaded="initialize" id="service" admins="{{ admins }}"></admin-service>
+		
+		<div class='main-container'>
+			<admin-list name="{{ name }}" admins="{{ admins.admin_units }}"></admin-list>
+			<map-interface id="map" topojson="{{ topo(admins.topojson) }}"></map-interface>
+		</div>
+	</template>
+	<script>
+		Polymer({ is: "admin-container",
+			properties: {
+				name: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				},
+				admins: {
+					type: Object,
+					notify: true
+				},
+				topojson: {
+					type: Object,
+					notify: true,
+				}
+			},
+
+			initialize: function() {
+				this.$.map.updateMap();
+			},
+
+			topo: function(json) {
+				this.topojson = $.parseJSON(json);
+				return this.topojson;
+			},
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,10 @@
+{% extends "web_app/base.html" %}
+
+{% block imports %}
+	<script type="text/javascript">SC.adminGroupId = {{ adminGroupId }}</script>
+	<link rel="import" href="/static/mtaasafi/admins/admin-container.html">
+{% endblock %}
+
+{% block content %}
+	<admin-container name="All Communities"></admin-container>
+{% endblock %}

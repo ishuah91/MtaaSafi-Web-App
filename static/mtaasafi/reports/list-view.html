@@ -1,0 +1,53 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="/static/components/bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="report-li.html">
+
+<dom-module id="report-list">
+	<link rel="import" type="css" href="css/report-list.css" />
+	<template>
+		
+				<!-- <page-inator id="pager" data="{{ reports }}" perpage="20" on-pager-data="{{ paginate }}" on-pager-change="{{ paginate }}"></page-inator> -->
+	</template>
+	<script>
+	Polymer({ is: 'list-view',
+	    behaviors: [
+			Polymer.NeonAnimatableBehavior
+	    ],
+	    listeners: {
+			'click': '_onClick'
+	    },
+	    properties: {
+			animationConfig: {
+				type: Object,
+				value: function() {
+					return {
+						'entry': [{
+							name: 'fade-in-animation',
+							node: this.$.back
+						}],
+						'exit': [{
+							name: 'fade-out-animation',
+							node: this.$.back
+						}, {
+							name: 'hero-animation',
+							id: 'hero',
+							fromPage: this
+						}]
+					};
+				}
+			}
+		},
+
+		_onClick: function(event) {
+			var target = event.target;
+			while (target !== this && !target._templateInstance)
+				target = target.parentNode;
+			// configure the page animation
+			this.sharedElements = { 'hero': target };
+
+			this.fire('item-click', { item: target });
+		}
+	});
+	</script>
+</dom-module>

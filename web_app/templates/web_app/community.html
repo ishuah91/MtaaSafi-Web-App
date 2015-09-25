@@ -1,0 +1,9 @@
+{% extends "mtaasafi/base.html" %}
+
+{% block imports %}
+	<link rel="import" href="/static/mtaasafi/reports/report-container.html">
+{% endblock %}
+
+{% block content %}
+	<report-container community-id="{{ community.pk }}" name="{{ community.name }}" {% if user.is_superuser %} superUser="true" {% endif %}></report-container>
+{% endblock %}

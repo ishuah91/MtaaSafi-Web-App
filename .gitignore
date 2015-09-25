@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+mtaasafi/local_settings.py
+
+

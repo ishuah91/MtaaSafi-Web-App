@@ -1,0 +1,92 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="report-service.html">
+<link rel="import" href="report-list.html">
+<link rel="import" href="/static/mtaasafi/map.html">
+<!-- <link rel="import" href="/static/plugins/map/map-interface.html"> -->
+
+<dom-module id="report-container">
+	<style>
+		:host {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+		report-list {
+			width: 100%;
+			max-height: 100%;
+			margin: 0 16px;
+			@apply(--layout-scroll);
+		}
+		.main-container { 
+			height: 100%;
+			@apply(--layout-horizontal);
+		}
+	</style>
+	<template>
+		<report-service id="service" reports="{{ reports }}" community-id="{{ communityId }}" community="{{ community }}"></report-service>
+
+		<iron-ajax id="urlselectedreport" url="" on-response="{{ urlSelectedReportLoaded }}" handleAs="json"></iron-ajax>
+		
+		<div class='main-container'>
+			<report-list name="{{ name }}" reports="{{ reports }}" selected="{{ selected }}" sortField="{{ sortField }}" superUser="{{ superUser }}"></report-list>
+			<map-interface points="{{ reports }}" admins="{{ admins }}" selected="{{ selected }}"></map-interface>
+		</div>
+	</template>
+	<script>
+		Polymer({ is: "report-container",
+			properties: {
+				name: {
+					type: String
+				},
+				community: {
+					type: Object,
+					notify: true,
+				},
+				communityId: {
+					type: Number,
+					value: 0,
+					notify: true,
+					reflectToAttribute: true
+				},
+				admins: {
+					type: Array,
+					notify: true,
+					computed: "createArray(community)"
+				},
+				reports: {
+					type: Array,
+					notify: true
+				},
+				sortField: {
+					type: String,
+					value: "timestamp"
+				},
+				selected: {
+					type: Object,
+					notify: true,
+				},
+				superUser: {
+					type: Boolean,
+					value: false
+				}
+			},
+
+			ready: function() {
+				if (location.search.split("selected=")[1] != null) {
+					url = "/api/v1/report/" + location.search.split("selected=")[1] + "/?format=json"
+					this.$.urlselectedreport.url = url;
+					this.$.urlselectedreport.generateRequest();
+				}
+			},
+			createArray: function(community) {
+				return [community];
+			},
+			urlSelectedReportLoaded: function(){
+				this.selected = this.$.urlselectedreport.lastResponse;
+			}
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<link rel="icon" type="image/png" href="/static/images/mtaa-safi.png" />
+		<title>Spatial Collective</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<script src="/static/components/bower_components/webcomponentsjs/webcomponents.js"></script>
+		<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+		<script type="text/javascript" src="/static/javascript/tools/jquery.js"></script>
+		<script type="text/javascript" src="/static/javascript/tools/d3.v3.min.js"></script>
+		<link rel="import" href="/static/components/bower_components/core-header-panel/core-header-panel.html">
+		<link rel="import" href="/static/components/bower_components/core-toolbar/core-toolbar.html">
+		<link rel="import" href="/static/components/bower_components/paper-input/paper-input.html">
+		<link rel="import" href="/static/mtaasafi/admins/admin-container.html">
+		<link rel="import" href="/static/mtaasafi/custom_elements/paper-submit.html">
+		<style>
+			@font-face {
+				font-family: 'Junction';
+				src: url('/static/css/extras/fonts/junction_02-webfont.woff');
+			}
+			html,body {
+				font-family: 'Junction';
+				height: 100%;
+				margin: 0;
+			}
+			core-header-panel {
+				height: 100%;
+			}
+			core-toolbar#main-tool {
+				background: #009999;
+				color: white;
+				font-size: 1.2em;
+			}
+			admin-container {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+		</style>
+	</head>
+	<body unresolved>
+		<core-header-panel mode='seamed'>
+			<core-toolbar id="main-tool">
+				<img src="/static/images/mtaa-safi.png" height="36px"/>
+				<span flex>Mtaa Safi</span>
+			</core-toolbar>
+			<div layout vertical center>
+	          <h2>Login</h2>
+	          {% if form.errors %}
+	            <p>Your username/password combination is not authorized.</p>
+	          {% endif %}
+	          <form id="login-form" class="margin" method="post" action="/login/">
+	            <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}" /> 
+	            <paper-input-decorator floatingLabel label="username">
+	              <input is="core-input" required name="username">
+	            </paper-input-decorator>
+	            <paper-input-decorator floatingLabel label="password">
+	              <input is="core-input" required name="password" type="password">
+	            </paper-input-decorator>
+	            <input type="hidden" name="next" value="/all" />
+	            <button type="submit" is="paper-submit">Log In</button>
+	          </form>
+	      </div>
+		</core-header-panel>
+	</body>
+</html>

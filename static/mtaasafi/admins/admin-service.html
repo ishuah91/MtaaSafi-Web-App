@@ -1,0 +1,28 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="admin-service">
+	<style>:host { display: none; }</style>
+	<template>
+		<iron-ajax id="ajax" auto on-response="adminsLoaded" handleAs="json"></iron-ajax>
+	</template>
+	<script>
+		Polymer({ is: "admin-service",
+			properties: {
+				admins: {
+					type: Object,
+					notify: true
+				},
+			},
+
+			ready: function() {
+				this.$.ajax.url = "/administration/api/v1/administrativegroup/" + SC.adminGroupId + "/?format=json&limit=0";
+			},
+
+			adminsLoaded: function() {
+				this.admins = this.$.ajax.lastResponse;
+				this.fire("data-downloaded");
+			},
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,26 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+
+<dom-module name="report-li">
+	<link rel="import" type="css" href="css/report-li.css" />
+	<template>
+		<div class="report">
+			<content select="iron-image"></content>
+			<div class="text-content">
+				<div class="text">
+					<content select="h2"></content>
+					<div class="subtext">
+						<content select="h3"></content>
+						<content class="visual-div" select="h3"></content>
+						<content select="h3"></content>
+					</div>
+				</div>
+				<div class='votes'>
+					<content select="h1"></content>
+					<content select="p"></content>
+				</div>
+			</div>
+		</div>
+		<content></content>
+	</template>
+	<script> Polymer({ is: "report-li" }); </script>
+</dom-module>

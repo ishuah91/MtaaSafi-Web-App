@@ -1,0 +1,17 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/plugins/layers/detail-card.html" />
+
+<dom-module id="map-interface">
+	<template>
+		<link rel="stylesheet" href="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.css" />
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7/leaflet.css" />
+		<link rel="stylesheet" href="css/map.css" />
+		
+		<div id="map_canvas"></div>
+	</template>
+	<script type="text/javascript" src="/static/javascript/tools/topojson.v1.min.js"></script>
+	<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7/leaflet.js"></script>
+	<script type="text/javascript" src="http://api.tiles.mapbox.com/mapbox.js/v1.6.3/mapbox.js"></script>
+</dom-module>
+<script src="/static/plugins/datum-model.js"></script>
+<script src="js/map-interface.js"></script>

@@ -1,0 +1,41 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="report-service">
+	<style>:host { display: none; }</style>
+	<template>
+		<iron-ajax id="ajax" url="{{ url }}" on-response="reportsLoaded" handle-as="json"></iron-ajax>
+	</template>
+	<script>
+		Polymer({ is: 'report-service',
+			properties: {
+				communityId: {
+					type: Number,
+					notify: true,
+					observer: "determineUrl"
+				},
+				reports: {
+					type: Array,
+					notify: true
+				},
+				community: {
+					type: Object,
+					notify: true
+				},
+				url: {
+					type: String,
+					notify: true,
+					reflectToAttribute: true
+				}
+			},
+			determineUrl: function(communityId) {
+				this.url = "/administration/api/v1/administrativeunitdetail/" + this.communityId + "/?format=json";
+				this.$.ajax.generateRequest();
+			},
+			reportsLoaded: function() {
+				this.community = this.$.ajax.lastResponse;
+				this.reports = this.community.report_set;
+			},
+		});
+	</script>
+</dom-module>

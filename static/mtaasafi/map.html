@@ -1,0 +1,41 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/leaflet-map-component/leaflet-map-component.html">
+<link rel="import" href="/static/components/bower_components/leaflet-map-component/leaflet-marker-component.html">
+<link rel="import" href="/static/components/bower_components/leaflet-map-component/leaflet-polygon-component.html">
+
+<dom-module id="map-interface">
+	<link rel="import" type="css" href="css/map.css" />
+	<template>
+		<leaflet-map zoom="7" latitude="0.2888" longitude="36.9673" map="{{ map }}">
+			<template is="dom-repeat" items="{{ points }}" as="report">
+				<leaflet-marker selected="{{ selected }}" report="{{ report }}" map="{{ map }}"></leaflet-marker>
+			</template>
+			<template is="dom-repeat" items="{{ admins }}" as="admin">
+				<leaflet-polygon admin="{{ admin }}" map="{{ map }}" on-tap="viewCommunity"></leaflet-polygon>
+			</template>
+		</leaflet-map>
+	</template>
+	<script>
+		Polymer({ is: "map-interface",
+			properties: {
+				selected: {
+					type: Object,
+					notify: true,
+					value: function() { return {}; },
+				},
+				map: {
+					type: Object,
+					notify: true,
+				},
+				admins: {
+					type: Array,
+					notify: true
+				},
+				points: {
+					type: Array,
+					notify: true
+				}
+			},
+		});
+	</script>
+</dom-module>

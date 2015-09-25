@@ -1,0 +1,138 @@
+:host {
+	display: block;
+	background-color: white;
+	width: 100%;
+	font-size: 1em;
+	font-weight: 100;
+}
+.report {
+	width: 100%;
+	background-color: white;
+	@apply(--layout-vertical);
+	@apply(--layout-flex);
+}
+.close {
+	@apply(--layout-center);
+}
+.text {
+	padding: 8px 0 0 0;
+	margin-right: 16px;
+	@apply(--layout-vertical);
+	@apply(--layout-flex);
+}
+#subtext {
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+.report .header {
+	color: #757575;
+	padding: 12px 0 0 0;
+	/*border-bottom: 1px solid #DEDEDE;*/
+	background: white;
+	@apply(--layout-horizontal);
+}
+paper-icon-button {
+	height: 24px;
+	margin: 0 8px 0 0 !important;
+}
+
+.report ::content h2 {
+	margin: 0;
+	font-size: 1.3em;
+	font-weight: 300;
+	width: 100%;
+	display: block;
+	color: #666666;
+	text-overflow: ellipsis;
+}
+.visual-div {
+	font-size: 16px;
+	margin: auto 8px;
+	color: #757575;
+	font-weight: 100;
+}
+.report ::content h3 {
+	font-size: 1em;
+	font-weight: 100;
+	color: #757575;
+	display: inline-block;
+	margin: 8px 0;
+}
+.votes {
+	width: 64px;
+	height: 64px;
+	z-index: 999;
+	@apply(--layout-vertical);
+	@apply(--layout-center);
+	@apply(--layout-end-justified);
+}
+
+.images, .comments {
+	margin: 16px 0 16px 48px;
+}
+.images {
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+.comments {
+	@apply(--layout-vertical);
+}
+.comments h3 {
+	height: 48px;
+	line-height: 48px;
+	margin: 0;
+	font-size: 1em;
+	font-weight: 100;
+	color: #BDBDBD;
+	border-top: 1px solid #DEDEDE;
+}
+.report ::content .comment p {
+	margin: 8px 16px 8px 0;
+	color: #757575;
+	font-size: 1em;
+	font-weight: 200;
+}
+.report ::content .comment .timestamp {
+	margin: 0;
+	color: #BDBDBD;
+	font-size: 1em;
+	font-weight: 200;
+}
+
+.votes ::content h1 {
+	margin: 0;
+	color: #757575;
+	font-size: 1.8em;
+	font-weight: 500;
+}
+.votes ::content p {
+	margin: 0;
+	font-size: 1em;
+	color: #757575;
+	font-weight: 100;
+}
+.report ::content iron-image {
+	display: inline-block;
+	margin: 8px 16px 8px 0;
+	z-index: 100;
+	background-color: lightgray;
+	border-radius: 4px;
+	border: 1px solid #DEDEDE;
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+
+.admin-controls {
+	margin: 0px 16px;
+	z-index: 999;
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+
+polyfill-next-selector { content: '.admin-controls paper-icon-button'; }
+.admin-controls ::content paper-icon-button {
+	margin: 1em;
+	font-size: 1em;
+	color: #757575;;
+	font-weight: 100;
+}

@@ -1,0 +1,68 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="/static/components/bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="/static/components/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/static/components/bower_components/iron-image/iron-image.html">
+<link rel="import" href="/static/components/bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="/static/components/bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="/static/components/bower_components/paper-icon-button/paper-icon-button.html">
+<!-- <link rel="import" href="/static/components/bower_components/polymer-filters/polymer-filters.html"> -->
+<!-- <link rel="import" href="../page-inator.html"> -->
+<link rel="import" href="report-li.html">
+<link rel="import" href="list-view.html">
+<link rel="import" href="report-detail.html">
+
+<dom-module id="report-list">
+	<link rel="import" type="css" href="css/report-list.css" />
+	<template>
+		<iron-ajax id="deleteReport" url="" method="DELETE"></iron-ajax>
+		<neon-animated-pages id="page" selected="0" transitions="hero-transition list-cascade cross-fade" on-neon-animated-pages-transition-end="complete">
+			<section id="list">
+				<paper-toolbar id="navheader">
+					<paper-icon-button flat id="back" icon="arrow-back" on-tap="back" center></paper-icon-button>
+		  			<span id="list-header">{{ name }}</span>
+					<paper-tabs id="tabs" selected="{{ sortField }}" attr-for-selected="name" align-bottom on-tap="changeSort">
+						<paper-tab name="timestamp">newest</paper-tab>
+						<paper-tab name="upvote_set">votes</paper-tab>
+					</paper-tabs>
+				</paper-toolbar>
+
+				<div class='list-content' hero-p reverse cross-fade>
+					<template is="dom-repeat" id="reports" items="{{ reports }}" as="report" sort="orderBy">
+						<report-li on-tap="viewDetail" hero-id="{{report.id}}" hero?="{{selected === report }}">
+							<iron-image src="{{ getThumbUrl(report.media_set.0.id) }}" width="113" height="85" sizing="cover" hero-id="{{ report.media_set[0].id }}-img" hero?="{{selected === report }}" cross-fade?="{{selected != report }}" ></iron-image>
+							<h2 cross-fade?="{{selected != report }}">{{report.description}}</h2>
+							<h3 cross-fade?="{{selected != report }}">{{report.name}}</h3>
+							<h3 class='visual-div'> - </h3>
+							<h3 cross-fade?="{{selected != report }}">{{ d3Date(report.timestamp) }}</h3>
+							<h1 cross-fade?="{{selected != report }}">{{report.upvote_set.length}}</h1>
+							<p cross-fade?="{{selected != report }}">votes</p>
+						</report-li>
+					</template>
+				</div>
+				<array-selector id="selector" items="{{ reports }}" selected="{{ selected }}"></array-selector>
+			</section>
+
+			<section id="details">
+				<report-detail on-x-tap="_onClose" report="{{ selected }}" hero>
+					<h2 hero-id="{{ selected.id }}-details" hero>{{selected.description}}</h2>
+					<h3 hero-id="{{ selected.id }}-name" class="place" hero>{{selected.name}}</h3>
+					<h3 hero-id="{{ selected.id }}-timestamp" class="time" hero>{{d3Date(selected.timestamp)}}</h3>
+					<h1 hero-id="{{ selected.id }}-votes" hero>{{selected.upvote_set.length}}</h1>
+					<template if="{{ superUser }}">
+						<paper-icon-button hero-id="{{ selected.id }}-delete" hero cross-fade?="{{ selected != report }}" on-tap="{{ deleteReport }}" icon="delete"></paper-icon-button>
+					</template>
+					<template is="dom-repeat" items="{{ selected.media_set }}" as="media">
+						<iron-image src="{{ getThumbUrl(media.id) }}" width="339" height="255" hero-id="{{ media.id }}-img" hero?="{{ media.id === selected.media_set.0.id }}" sizing="cover" preload fade cross-fade></iron-image>
+					</template>
+					<template is="dom-repeat" id="comments" items="{{ selected.comment_set }}" as="c" sort="sortByTime">
+						<div class="comment">
+							<p><span>{{ c.comment }}</span> - <span class="timestamp">{{ d3Date(c.timestamp) }}</span></p>
+						</div>
+					</template>
+				</report-detail>
+			</section>
+		</neon-animated-pages>
+	</template>
+	<script src="js/report-list.js"></script>
+</dom-module>

@@ -1,0 +1,33 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+<link rel="import" href="/static/components/bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="/static/components/bower_components/paper-tabs/paper-tabs.html">
+<!-- <link rel="import" href="/static/components/bower_components/polymer-filters/polymer-filters.html"> -->
+<link rel="import" href="admin-li.html">
+
+<dom-module id="admin-list">
+	<link rel="import" type="css" href="css/admin-list.css" />
+	<template>
+
+		<paper-scroll-header-panel id="admin-container">
+			<paper-toolbar cross-fade>
+      			<span id="list-header">{{ name }}</span>
+				<paper-tabs id="tabs" selected="{{ sortField }}" attr-for-selected="name" on-tap="changeSort" align-bottom>
+					<paper-tab name="name">alphabetical</paper-tab>
+					<paper-tab name="report_set">report count</paper-tab>
+				</paper-tabs>
+    		</paper-toolbar>
+		    		
+			<div class='admin-list'>
+				<template is="dom-repeat" id="adminsList" items="{{ admins }}" as="admin" sort="orderBy">
+					<admin-li on-tap="viewCommunity">
+						<h2>{{ admin.name }}</h2>
+						<h1>{{ admin.report_set.length }}</h1>
+						<p>reports</p>
+					</admin-li>
+				</template>
+			</div>
+		</paper-scroll-header-panel>
+	</template>
+</dom-module>
+<script src="js/admin-list.js"></script>

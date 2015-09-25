@@ -1,0 +1,55 @@
+<link rel="import" href="/static/components/bower_components/polymer/polymer.html">
+<link rel="import" href="/static/components/bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="/static/components/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/static/components/bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="report-detail">
+	<link rel="import" type="css" href="css/report-detail.css" />
+	<template>
+		<div class="report" hero-id="{{ report.id }}">
+			<div class='header'>
+				<paper-icon-button flat class="close" icon="close" on-tap="close"></paper-icon-button>
+				<div class="text">
+					<content select="h2"></content>
+					<div id="subtext">
+						<content select=".place"></content>
+						<span class="visual-div" cross-fade> - </span>
+						<content select=".time"></content>
+					</div>
+				</div>
+				<div class='votes'>
+					<content select="h1"></content>
+					<p hero-id="{{ report.id }}-vote-text" hero cross-fade>votes</p>
+				</div>
+				<div class='admin-controls'>
+					<content select="paper-icon-button"></content>
+				</div>
+			</div>
+
+			<div class="images">
+				<content select="iron-image"></content>
+			</div>
+
+			<div class="comments">
+				<h3>Comments</h3>
+				<content select=".comment"></content>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({ is: "report-detail",
+			properties: {
+				report: {
+					type: Object,
+					notify: true
+				}
+			},
+			close: function(event, detail, sender) {
+				this.fire('x-tap');
+			},
+			reportChanged: function(newVal, oldVal) {
+				console.log(this.report.comment_set);
+			}
+		});
+    </script>
+</dom-module>

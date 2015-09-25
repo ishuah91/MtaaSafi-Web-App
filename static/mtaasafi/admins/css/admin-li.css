@@ -1,0 +1,55 @@
+:host {
+	display: block;
+	background-color: white;
+	width: 100%;
+	height: 48px;
+	font-size: 1em;
+	font-weight: 100;
+	cursor: pointer;
+}
+.admin {
+	background-color: white;
+	@apply(--layout-horizontal);
+	@apply(--layout-center);
+}
+.text {
+	padding: 8px 0 0 0;
+	margin-right: 16px;
+	@apply(--layout-flex);
+}
+.admin ::content h2 {
+	margin: 0;
+	font-size: 1.3em;
+	font-weight: 300;
+	width: 100%;
+	display: block;
+	color: #666666;
+	text-overflow: ellipsis;
+}
+polyfill-next-selector { content: '.admin h3'; }
+.admin ::content h3 {
+	margin: 0;
+	font-size: 1em;
+	font-weight: 100;
+	color: #757575;
+	display: inline-block;
+}
+.reports {
+	margin: 0 20px;
+	z-index: 999;
+	@apply(--layout-center);
+	@apply(--layout-end-justified);
+}
+.reports ::content h1 {
+	margin: 0;
+	color: #757575;
+	text-align: center;
+	font-size: 1.8em;
+	font-weight: 500;
+}
+.reports ::content p {
+	margin: 0;
+	font-size: 1em;
+	color: #757575;;
+	font-weight: 100;
+}
