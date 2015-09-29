@@ -29,7 +29,7 @@
 				}
 			},
 			determineUrl: function(communityId) {
-				this.url = "/administration/api/v1/administrativeunitdetail/" + this.communityId + "/?format=json";
+				this.url = "/api/v1/administrativeunitdetail/" + this.communityId + "/?format=json";
 				this.$.ajax.generateRequest();
 			},
 			reportsLoaded: function() {

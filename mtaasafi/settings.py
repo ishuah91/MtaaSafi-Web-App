@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
 
     'base_map',
-    'web_app'
+    'web_app',
+    'api'
 )
 
 MIDDLEWARE_CLASSES = (
